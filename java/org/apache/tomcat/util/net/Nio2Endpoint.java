@@ -1623,7 +1623,7 @@ public class Nio2Endpoint extends AbstractJsseEndpoint<Nio2Channel> {
                 }
                 if (handshake == 0) {
                     SocketState state = SocketState.OPEN;
-                    // Process the request from this socket
+                    // Process the request from this socket 核心方法 process
                     if (event == null) {
                         state = getHandler().process(socketWrapper, SocketEvent.OPEN_READ);
                     } else {

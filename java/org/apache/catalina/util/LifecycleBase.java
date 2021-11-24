@@ -180,7 +180,9 @@ public abstract class LifecycleBase implements Lifecycle {
         }
 
         try {
+            // 状态调整 触发STARTING_PREP 监听器
             setStateInternal(LifecycleState.STARTING_PREP, null, false);
+            // 抽象模板方法 子类负责实现
             startInternal();
             if (state.equals(LifecycleState.FAILED)) {
                 // This is a 'controlled' failure. The component put itself into the

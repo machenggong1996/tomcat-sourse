@@ -1065,6 +1065,8 @@ public abstract class AbstractEndpoint<S> {
      */
     public boolean processSocket(SocketWrapperBase<S> socketWrapper,
             SocketEvent event, boolean dispatch) {
+        // processSocket方法中，将具体的nio连接转换成socketProcessor处理线程。
+        // 这个类是一个工作线程。可以将其理解成生产者消费者模型中的消费者。然后通过executor执行这个线程。
         try {
             if (socketWrapper == null) {
                 return false;

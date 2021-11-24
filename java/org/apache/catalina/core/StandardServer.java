@@ -763,6 +763,8 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
         // Start our defined Services
         synchronized (servicesLock) {
             for (int i = 0; i < services.length; i++) {
+                // service组件启动
+                // NioEndpoint 的 startInternal
                 services[i].start();
             }
         }

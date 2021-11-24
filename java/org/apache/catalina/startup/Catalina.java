@@ -686,6 +686,7 @@ public class Catalina {
 
         // Start the new server
         try {
+            // server 组件启动
             getServer().start();
         } catch (LifecycleException e) {
             log.fatal(sm.getString("catalina.serverStartFail"), e);

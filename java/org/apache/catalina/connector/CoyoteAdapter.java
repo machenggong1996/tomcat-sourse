@@ -296,6 +296,16 @@ public class CoyoteAdapter implements Adapter {
     }
 
 
+    /**
+     * 核心方法
+     * 将Request和Response装换成Servlet容器中处理的Request和Response，
+     * 然后从service中获取容器，再调用管道Pipeline的阀门Valve的invoke方法
+     *
+     * @param req The request object
+     * @param res The response object
+     *
+     * @throws Exception
+     */
     @Override
     public void service(org.apache.coyote.Request req, org.apache.coyote.Response res)
             throws Exception {
