@@ -249,6 +249,7 @@ public final class Bootstrap {
      */
     public void init() throws Exception {
 
+        // 初始化类加载器
         initClassLoaders();
 
         Thread.currentThread().setContextClassLoader(catalinaLoader);
@@ -258,12 +259,14 @@ public final class Bootstrap {
         // Load our startup class and call its process() method
         if (log.isDebugEnabled())
             log.debug("Loading startup class");
+        // 加载Catalina 调用其构造方法
         Class<?> startupClass = catalinaLoader.loadClass("org.apache.catalina.startup.Catalina");
         Object startupInstance = startupClass.getConstructor().newInstance();
 
         // Set the shared extensions class loader
         if (log.isDebugEnabled())
             log.debug("Setting startup class properties");
+        // 调用 Catalina setParentClassLoader 方法
         String methodName = "setParentClassLoader";
         Class<?> paramTypes[] = new Class[1];
         paramTypes[0] = Class.forName("java.lang.ClassLoader");
@@ -272,7 +275,7 @@ public final class Bootstrap {
         Method method =
             startupInstance.getClass().getMethod(methodName, paramTypes);
         method.invoke(startupInstance, paramValues);
-
+        // Catalina 实例赋值
         catalinaDaemon = startupInstance;
     }
 
@@ -283,6 +286,7 @@ public final class Bootstrap {
     private void load(String[] arguments) throws Exception {
 
         // Call the load() method
+        // 反射调用 Catalina的 load方法
         String methodName = "load";
         Object param[];
         Class<?> paramTypes[];
@@ -440,6 +444,7 @@ public final class Bootstrap {
                 // Don't set daemon until init() has completed
                 Bootstrap bootstrap = new Bootstrap();
                 try {
+                    // 初始化
                     bootstrap.init();
                 } catch (Throwable t) {
                     handleThrowable(t);
@@ -470,7 +475,9 @@ public final class Bootstrap {
                 daemon.stop();
             } else if (command.equals("start")) {
                 daemon.setAwait(true);
+                // 加载配置逐级初始化
                 daemon.load(args);
+                // 加载配置逐级启动
                 daemon.start();
                 if (null == daemon.getServer()) {
                     System.exit(1);

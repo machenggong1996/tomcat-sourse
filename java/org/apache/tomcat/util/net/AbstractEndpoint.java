@@ -1115,6 +1115,7 @@ public abstract class AbstractEndpoint<S> {
 
     public void init() throws Exception {
         if (bindOnInit) {
+            // java nio 的 API 创建了相关的对象及对象初始化工作。
             bind();
             bindState = BindState.BOUND_ON_INIT;
         }

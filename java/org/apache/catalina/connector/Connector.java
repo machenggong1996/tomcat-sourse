@@ -990,6 +990,7 @@ public class Connector extends LifecycleMBeanBase  {
         }
 
         try {
+            // protocolHandler 组件初始化
             protocolHandler.init();
         } catch (Exception e) {
             throw new LifecycleException(

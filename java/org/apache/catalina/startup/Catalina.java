@@ -636,6 +636,7 @@ public class Catalina {
 
         // Start the new server
         try {
+            // server 组件初始化
             getServer().init();
         } catch (LifecycleException e) {
             if (Boolean.getBoolean("org.apache.catalina.startup.EXIT_ON_INIT_FAILURE")) {
