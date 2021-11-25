@@ -417,6 +417,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
                 channel.setIOChannel(socket);
                 channel.reset();
             }
+            // 请求核心方法注册
             getPoller0().register(channel);
         } catch (Throwable t) {
             ExceptionUtils.handleThrowable(t);
@@ -502,7 +503,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
                     if (running && !paused) {
                         // setSocketOptions() will hand the socket off to
                         // an appropriate processor if successful
-                        // 将socket连接添加到一个缓存队列里面
+                        // 将socket连接添加到一个缓存队列里面 核心方法
                         if (!setSocketOptions(socket)) {
                             closeSocket(socket);
                         }
@@ -747,6 +748,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
             ka.interestOps(SelectionKey.OP_READ);//this is what OP_REGISTER turns into.
             if ( r==null) r = new PollerEvent(socket,ka,OP_REGISTER);
             else r.reset(socket,ka,OP_REGISTER);
+            //
             addEvent(r);
         }
 

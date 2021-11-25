@@ -1079,6 +1079,7 @@ public abstract class AbstractEndpoint<S> {
             }
             Executor executor = getExecutor();
             if (dispatch && executor != null) {
+                // 核心方法 执行
                 executor.execute(sc);
             } else {
                 sc.run();
