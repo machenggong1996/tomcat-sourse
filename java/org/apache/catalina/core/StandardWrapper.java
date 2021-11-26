@@ -1117,7 +1117,11 @@ public class StandardWrapper extends ContainerBase
         // NO-OP
     }
 
-
+    /**
+     * 初始化servlet
+     * @param servlet
+     * @throws ServletException
+     */
     private synchronized void initServlet(Servlet servlet)
             throws ServletException {
 
@@ -1141,6 +1145,7 @@ public class StandardWrapper extends ContainerBase
                     }
                 }
             } else {
+                // 核心方法 初始化servlet
                 servlet.init(facade);
             }
 

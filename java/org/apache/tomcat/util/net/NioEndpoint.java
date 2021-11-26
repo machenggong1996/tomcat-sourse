@@ -483,7 +483,9 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel> {
                     try {
                         // Accept the next incoming connection from the server
                         // socket 建立连接
+                        System.out.println("socket 开始监听");
                         socket = serverSock.accept();
+                        System.out.println("socket 监听到"+ socket.getRemoteAddress());
                     } catch (IOException ioe) {
                         // We didn't get a socket
                         countDownConnection();

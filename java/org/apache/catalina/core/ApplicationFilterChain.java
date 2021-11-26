@@ -163,6 +163,7 @@ public final class ApplicationFilterChain implements FilterChain {
                     throw new ServletException(e.getMessage(), e);
             }
         } else {
+            // 核心方法
             internalDoFilter(request,response);
         }
     }
@@ -228,6 +229,7 @@ public final class ApplicationFilterChain implements FilterChain {
                                            args,
                                            principal);
             } else {
+                // 调用 servlet service方法
                 servlet.service(request, response);
             }
         } catch (IOException | ServletException | RuntimeException e) {

@@ -45,6 +45,7 @@ import org.apache.tomcat.util.res.StringManager;
 /**
  * Valve that implements the default basic behavior for the
  * <code>StandardWrapper</code> container implementation.
+ * 在这个valve中 进入servlet
  *
  * @author Craig R. McClanahan
  */
@@ -99,10 +100,11 @@ final class StandardWrapperValve
         // This should be a Request attribute...
         long t1=System.currentTimeMillis();
         requestCount.incrementAndGet();
+        // StandardWrapper 初始化  servlet 包装了 servlet
         StandardWrapper wrapper = (StandardWrapper) getContainer();
         Servlet servlet = null;
         Context context = (Context) wrapper.getParent();
-
+        // 判断context和wrapper的 是否可用
         // Check for the application being marked unavailable
         if (!context.getState().isAvailable()) {
             response.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE,
@@ -131,6 +133,7 @@ final class StandardWrapperValve
         // Allocate a servlet instance to process this request
         try {
             if (!unavailable) {
+                // 初始化servlet
                 servlet = wrapper.allocate();
             }
         } catch (UnavailableException e) {
@@ -169,6 +172,7 @@ final class StandardWrapperValve
         request.setAttribute(Globals.DISPATCHER_REQUEST_PATH_ATTR,
                 requestPathMB);
         // Create the filter chain for this request
+        // servlet service在这里调用
         ApplicationFilterChain filterChain =
                 ApplicationFilterFactory.createFilterChain(request, wrapper, servlet);
 
@@ -183,6 +187,7 @@ final class StandardWrapperValve
                         if (request.isAsyncDispatching()) {
                             request.getAsyncContextInternal().doInternalDispatch();
                         } else {
+                            // 调用servlet service方法
                             filterChain.doFilter(request.getRequest(),
                                     response.getResponse());
                         }
