@@ -543,6 +543,7 @@ public class Catalina {
         initNaming();
 
         // Create and execute our Digester
+        // 此方法创建解析server.xml的Digester，根据server.xml的元素标签，为每个标签设置相应的规则组，在解析标签时进行调用
         Digester digester = createStartDigester();
 
         InputSource inputSource = null;
@@ -550,6 +551,7 @@ public class Catalina {
         File file = null;
         try {
             try {
+                // 加载server.xml配置
                 file = configFile();
                 inputStream = new FileInputStream(file);
                 inputSource = new InputSource(file.toURI().toURL().toString());
@@ -608,6 +610,7 @@ public class Catalina {
             try {
                 inputSource.setByteStream(inputStream);
                 digester.push(this);
+                // 加载解析配置
                 digester.parse(inputSource);
             } catch (SAXParseException spe) {
                 log.warn("Catalina.start using " + getConfigFile() + ": " +
